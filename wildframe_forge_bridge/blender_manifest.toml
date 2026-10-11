@@ -1,0 +1,20 @@
+schema_version = "1.0.0"
+
+id = "wildframe_forge_bridge"
+version = "1.0.0"
+name = "Wildframe Forge Bridge"
+tagline = "Let AI assistants drive Blender and swap assets with Unreal Engine"
+maintainer = "Wildframe Forge <wildframeforge@gmail.com>"
+type = "add-on"
+website = "https://github.com/WildframeForge/wildframe-forge-blender"
+tags = ["Pipeline", "Import-Export", "System"]
+
+blender_version_min = "4.2.0"
+
+# Blender add-ons use Blender's Python API and must be GPL-compatible.
+license = ["SPDX:GPL-3.0-or-later"]
+copyright = ["2026 Wildframe Forge"]
+
+[permissions]
+network = "Runs a local-only HTTP server on 127.0.0.1 so AI tools and the Wildframe Forge Unreal plugin can send commands"
+files = "Imports and exports models, textures and scenes through the Wildframe Forge exchange folder"
