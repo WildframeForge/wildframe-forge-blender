@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Wildframe Forge recipes for Blender: ready-made one-call tasks with short answers.
 
 Same rules as the Unreal recipes: built-ins only, compact results, dryRun where it changes things,
@@ -157,12 +158,12 @@ def clean_mesh(params):
 
 @command("RECIPE.PREP_FOR_UNREAL", "Get meshes ready for Unreal in one call: apply rotation and scale, put the "
          "origin at the bottom centre (so they sit on the ground), optionally scale to a real height in metres, "
-         "move to the world origin and add an SM_ name prefix. Then send with BRIDGE.SEND_TO_UNREAL.",
+         "move to the world origin and add an SM_ name prefix (default; prefix \"\" keeps the name). Then send with BRIDGE.SEND_TO_UNREAL.",
          params={"names": NAMES, "origin": {"type": "string", "enum": ["BOTTOM_CENTER", "CENTER", "KEEP"],
                                              "default": "BOTTOM_CENTER"},
                  "height_m": {"type": "number", "description": "Scale uniformly so the object is this tall."},
                  "to_world_origin": {"type": "boolean", "default": False},
-                 "prefix": {"type": "string", "default": "", "description": "e.g. SM_ (skipped if already there)."},
+                 "prefix": {"type": "string", "default": "SM_", "description": "Name prefix, default SM_ (skipped if already there); \"\" keeps the name."},
                  "dryRun": {"type": "boolean", "default": False}}, mutating=True)
 def prep_for_unreal(params):
     objs = _meshes(params.get("names"))
@@ -199,7 +200,8 @@ def prep_for_unreal(params):
             if params.get("to_world_origin"):
                 obj.location = (0.0, 0.0, 0.0)
             mesh.update()
-            prefix = params.get("prefix") or ""
+            prefix = params["prefix"] if "prefix" in params else "SM_"
+            prefix = prefix or ""
             if prefix and not obj.name.startswith(prefix):
                 obj.name = prefix + obj.name
             bpy.context.view_layer.update()
@@ -264,11 +266,15 @@ def studio_lights(params):
 # ------------------------------------------------------------------ RECIPE.PREVIEW_RENDER
 
 @command("RECIPE.PREVIEW_RENDER", "Quick preview image of objects in one call: a temporary camera frames them from "
-         "the given angle, renders with Eevee at low samples, then is removed. Returns the PNG path (read it with "
-         "read_image). Nothing else in the scene changes.",
+         "the given angle, renders with Eevee at low samples, then is removed. Only the named objects (and lights) "
+         "are rendered unless isolate is false. Returns the PNG path (read it with read_image). Nothing else in the "
+         "scene changes.",
          params={"names": NAMES, "yaw": {"type": "number", "default": 35}, "pitch": {"type": "number", "default": 20},
                  "resolution": {"type": "array", "default": [1280, 720]}, "samples": {"type": "integer", "default": 16},
-                 "path": {"type": "string"}}, long_running=True)
+                 "path": {"type": "string"},
+                 "isolate": {"type": "boolean", "default": True,
+                             "description": "When names are given, hide every other object (not lights) for this render."}},
+         long_running=True)
 def preview_render(params):
     scene = bpy.context.scene
     objs = _meshes(params.get("names"))
@@ -296,6 +302,17 @@ def preview_render(params):
     saved = {"camera": scene.camera, "x": scene.render.resolution_x, "y": scene.render.resolution_y,
              "pct": scene.render.resolution_percentage, "engine": scene.render.engine,
              "fmt": scene.render.image_settings.file_format, "out": scene.render.filepath}
+    hidden = []
+    if params.get("names") and params.get("isolate", True):
+        keep = set(objs)
+        for obj in scene.objects:
+            if obj in keep or obj is cam or obj.type == "LIGHT" or obj.hide_render:
+                continue
+            # keep parents/children of a named object (e.g. an empty holding the parts)
+            if any(k in obj.children_recursive or obj in k.children_recursive for k in keep):
+                continue
+            obj.hide_render = True
+            hidden.append(obj)
     try:
         scene.camera = cam
         scene.render.resolution_x, scene.render.resolution_y = int(res[0]), int(res[1])
@@ -318,7 +335,9 @@ def preview_render(params):
         scene.render.engine = saved["engine"]
         scene.render.image_settings.file_format = saved["fmt"]
         scene.render.filepath = saved["out"]
+        for obj in hidden:
+            obj.hide_render = False
         bpy.data.objects.remove(cam, do_unlink=True)
         bpy.data.cameras.remove(cam_data)
-    return {"path": path, "exists": os.path.isfile(path), "framed": _short(o.name for o in objs),
+    return {"path": path, "exists": os.path.isfile(path), "framed": _short(o.name for o in objs), "hiddenForRender": len(hidden),
             "_message": "Preview saved to %s." % path}
