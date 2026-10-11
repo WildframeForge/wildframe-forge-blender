@@ -1,1 +1,1 @@
-9597b0667c80f54fedb30bbd7a2f8d32cef01069a50aa253bdaae575702c130e  wildframe_forge_bridge-1.0.0.zip
+b4ead926b5538fa72032eeaa8b0a6b71249cf078e8a379fc96dfceda5e5f2595  wildframe_forge_bridge-1.0.0.zip
