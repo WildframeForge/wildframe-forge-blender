@@ -11,7 +11,7 @@ between Blender and Unreal Engine while both are open.
 
 ## Install
 
-**With Wildframe Forge Bridge (Unreal plugin or Wildframe Forge Setup):** you don't need to do anything here. Open the
+**With Wildframe Forge Bridge (the Unreal plugin):** you don't need to do anything here. Open the
 Setup page and click **Fix all** (or **Install** on the Blender row). It downloads the add-on from this page
 and installs it into Blender for you.
 
@@ -28,11 +28,15 @@ Requires Blender 4.2 or newer (tested with Blender 5.2) on Windows.
 ## Where to get the rest
 
 The Unreal Engine plugin, the AI connector and the Adobe panels are sold on Fab as **Wildframe Forge Bridge** and
-**Wildframe Forge Bridge Complete**. Videos: [youtube.com/@WildframeForge1](https://www.youtube.com/@WildframeForge1).
+**Wildframe Forge Bridge Complete**. Documentation: [docs/README.md](docs/README.md) (Adobe apps: [docs/Adobe.md](docs/Adobe.md)).
+Videos: [youtube.com/@WildframeForge1](https://www.youtube.com/@WildframeForge1).
+
+The [hub-tray](hub-tray) folder holds the Wildframe Forge Hub's tray icon program, which the plugin's Setup page
+downloads (it is not part of the add-on and not covered by the GPL; its source is next to it).
 
 ## Licence
 
-The add-on's code is licensed under the **GNU General Public License v3.0 or later** (see [LICENSE](LICENSE)), as
+The add-on's code (`wildframe_forge_bridge`) is licensed under the **GNU General Public License v3.0 or later** (see [LICENSE](LICENSE)), as
 Blender requires for add-ons that use its Python API. You may use, change and share it under those terms.
 
 The Wildframe Forge name and emblem (`wildframe_forge_bridge/icons/emblem.png`) are Wildframe Forge's own artwork and
