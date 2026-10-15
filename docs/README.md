@@ -8,7 +8,7 @@ models, materials and scenes back and forth.
   - assets, actors, levels, materials, landscape, PCG, foliage and water;
   - Sequencer, cameras, animation, MetaHuman and Control Rig;
   - rendering, validation and Python.
-- **Blender add-on** (free and open source; Setup downloads and installs it for you): 60 commands covering
+- **Blender add-on** (free and open source; see *Dependencies*): 60 commands covering
   objects, mesh, modifiers, materials, lights, cameras, collections, import/export, rendering, keyframes and
   viewport capture.
 - **Live Unreal ↔ Blender transfer**:
@@ -46,9 +46,31 @@ Both editions are built from the same code; the Complete edition adds the Adobe 
   PowerShell (Setup's Grok Build row copies it for you), then run `grok` and sign in. Any chat AI (ChatGPT, Grok, Gemini, free plans included) works through the AI
   Scripts pages: in Unreal for Unreal, in Blender's sidebar (N > Wildframe Forge > AI Scripts) for Blender, and the
   hub's page for the Adobe apps (Complete). Handy on a PC that cannot run Blender or Unreal and an AI app together.
-- An internet connection the first time: the Setup page downloads Node.js (the official build, from nodejs.org;
-  it runs the hub and the AI connector), the hub's tray icon and the free Blender add-on, and checks each file
-  against its fingerprint. The package itself contains no programs or installers.
+- The dependencies below. The package itself contains no programs or installers.
+
+## Dependencies
+
+| Dependency | Needed for | Where to get it |
+|---|---|---|
+| **Node.js** 18 or newer (LTS recommended, free) | the AI connector and the Wildframe Forge Hub | https://nodejs.org/en/download: download the **Windows Installer (.msi)** and run it |
+| **Wildframe Forge add-on for Blender** (free, open source) | the Blender side | https://github.com/WildframeForge/wildframe-forge-blender/blob/main/dist/wildframe_forge_bridge-1.0.0.zip: click the download button |
+| Tray icon `WildframeForgeHub.exe` (optional) | the hub's icon by the clock (deliveries menu, Setup, Start with Windows) | https://github.com/WildframeForge/wildframe-forge-blender/blob/main/hub-tray/WildframeForgeHub.exe |
+| Blender 4.2 or newer (optional) | the Blender side | https://www.blender.org/download/ |
+
+**Wildframe Forge Bridge (Unreal + Blender)** never downloads anything itself. You install the dependencies from the
+pages above; the Setup page has a button for each page and finds what you installed:
+- **Node.js**: run the installer, then come back to Unreal. The **Connector files** row turns green by itself within a
+  few seconds (installed somewhere unusual? click **Choose node.exe...**). Setup uses a copy of it in
+  `%LOCALAPPDATA%\WildframeForge\Runtime\node`, so updating or removing Node.js later does not break anything.
+- **Blender add-on**: download the zip (it goes to your Downloads folder), then click **Install** on the add-on row.
+  Setup installs it with Blender's own installer. Saved it somewhere else? Click **Install from file...**. You can
+  also install it in Blender yourself: **Edit > Preferences > Get Extensions > Install from Disk**.
+- **Tray icon** (optional): download it into your Downloads folder; the hub adds it within a minute (only the exact
+  file published on that page, checked by its fingerprint). Everything works without it.
+
+**Wildframe Forge Bridge Complete** (adds the Adobe apps): the Setup page downloads Node.js (the official build from
+nodejs.org), the tray icon and the Blender add-on for you, and checks each file against its fingerprint. This needs an
+internet connection the first time.
 
 ## Install (about 2 minutes)
 
@@ -61,8 +83,11 @@ Both editions are built from the same code; the Complete edition adds the Adobe 
 3. Follow the lights. Green means ready. Every other row has a button that fixes it:
    - **Blender**: found automatically on any drive. If it isn't, click **Browse…** once and pick
      `blender.exe`; it is remembered.
-   - **Wildframe Forge add-on in Blender**: click **Install**. Setup downloads the free add-on and Blender's own
-     installer adds and enables it. This needs an internet connection the first time. (The AI can also do it: if
+   - **Connector files** (Unreal + Blender edition): install Node.js first (see *Dependencies*: **Get Node.js** opens
+     its page). The row turns green by itself.
+   - **Wildframe Forge add-on in Blender**: click **Install**; Blender's own installer adds and enables it. Unreal +
+     Blender edition: click **Get the add-on** and download the zip first. Complete edition: Setup downloads it (internet
+     needed the first time). (The AI can also do it: if
      it opens Blender and the add-on is missing, it installs it first.)
    - **AI apps**: click **Connect all AI apps**, or **Connect** on one app.
      - Claude Desktop opens its install window; click **Install** there.
@@ -401,7 +426,5 @@ page click **Remove** next to each AI app first if you want them disconnected.
 
 - The Unreal plugin and the connector are covered by the Fab Standard License.
 - The Blender add-on is not part of this package. It is free and open source (GPL-3.0-or-later, as Blender requires
-  for add-ons) and is published at https://github.com/WildframeForge/wildframe-forge-blender. Setup downloads the
-  version this plugin was tested with and checks its SHA-256 before installing it. You can also install it by hand
-  from that page.
+  for add-ons) and is published at https://github.com/WildframeForge/wildframe-forge-blender (see *Dependencies*).
 - See `THIRD_PARTY.md` for third-party notices.

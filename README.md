@@ -11,9 +11,14 @@ between Blender and Unreal Engine while both are open.
 
 ## Install
 
-**With Wildframe Forge Bridge (the Unreal plugin):** you don't need to do anything here. Open the
-Setup page and click **Fix all** (or **Install** on the Blender row). It downloads the add-on from this page
-and installs it into Blender for you.
+**With Wildframe Forge Bridge (Unreal + Blender):** download the zip (link below) into your Downloads folder, then
+open the plugin's Setup page in Unreal and click **Install** on the add-on row. It installs it into Blender for you.
+
+**With Wildframe Forge Bridge Complete:** nothing to do here. The Setup page in Unreal downloads the add-on from this
+page and installs it (**Fix all**, or **Install** on the add-on row).
+
+**Download:** [wildframe_forge_bridge-1.0.0.zip](dist/wildframe_forge_bridge-1.0.0.zip) (click the download button on
+that page).
 
 **By hand:**
 
@@ -31,8 +36,10 @@ The Unreal Engine plugin, the AI connector and the Adobe panels are sold on Fab 
 **Wildframe Forge Bridge Complete**. Documentation: [docs/README.md](docs/README.md) (Adobe apps: [docs/Adobe.md](docs/Adobe.md)).
 Videos: [youtube.com/@WildframeForge1](https://www.youtube.com/@WildframeForge1).
 
-The [hub-tray](hub-tray) folder holds the Wildframe Forge Hub's tray icon program, which the plugin's Setup page
-downloads (it is not part of the add-on and not covered by the GPL; its source is next to it).
+The [hub-tray](hub-tray) folder holds the Wildframe Forge Hub's optional tray icon program,
+[WildframeForgeHub.exe](hub-tray/WildframeForgeHub.exe) (Unreal + Blender edition: download it into your Downloads
+folder and the hub adds it; Complete: Setup downloads it). It is not part of the add-on and not covered by the GPL;
+its source is next to it.
 
 ## Licence
 
